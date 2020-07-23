@@ -1,6 +1,6 @@
-Omid Ghamiloo
-Master of Data Science at Sapienza university
-IMDB Scarping
+## Omid Ghamiloo
+### Master of Data Science at Sapienza university
+# IMDB Scarping
 This dataset is collected from IMDB and uses the official website directly and includes Feature Film/TV Movie that has been Released between 1900-01-01 and 2020-06-01 by BeautifulSoup library on python3. 
 Data collecting in this dataset has 3 steps. 
 -First Step: After you search for the popular movies which are released between 1900 and 2020, there are 4924 pages on IMDB and each page introduces 100 movies. The first step is collecting these 4924 pages beacuse each page has the unique and different web address. There are many ways for collecting data like this Definitely, but because this is my first project on Web Scraping, I did this.
