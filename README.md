@@ -254,6 +254,6 @@ python file of this project.
 The second part of the dashboard is in sidebar. Some information about the evaluation of the model that
 you chose, will be shown in the sidebar.
 
-https://www.ghamiloo.info/
-omid.ghamiloo@gmail.com
-https://www.linkedin.com/in/omid-ghamiloo/
+### https://www.ghamiloo.info/
+### omid.ghamiloo@gmail.com
+### https://www.linkedin.com/in/omid-ghamiloo/
