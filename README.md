@@ -9,7 +9,7 @@
 ### The first and second step have been done on my laptop with core i5 CPU and 16 GB of Ram in jupyter notebook with python 3
 ### The third part has been done in SageMaker service with ml.t2.medium instance that is developed by Amazon AWS. 
 ### Web Scarping : Web scraping, web harvesting, or web data extraction is data scraping used for extracting data from websites.
-# Data Visualization
+# Modelling
 In the real world, what the factors are important on the revenue of a movie? How can we estimate the box
 office revenue?
 
@@ -21,7 +21,7 @@ the models, first choose 10 percent of our data that we have its revenue as test
 models’ prediction to the real values of revenue. For being sure, I’m not satisfied to choose 10 percent one
 time as test set, but I choose 10 time as random 10 percent of the data as test set by cross validation.
 
-Dataset
+## Dataset
 
 the dataset which is used in this project, is contained 3000 movies in train and 5000 movies on test and
 variety of metadata obtained from The Movie Database (TMDB) which are downloaded from Kaggle
@@ -83,20 +83,20 @@ I will talk about fixing missing values in the rest of the report.
 Two other factors (number of votes and rate) are excist that I will talk about them in extra variables
 section.
 
-Libraries
+## Libraries
 
 Some libraries are important for data analysis like Numpy, Pandas and matplotlib which are imported first.
 The others are imported when I needed them like scikit-learn for modeling and beautiful soup for web
 scraping.
 
-Extra variables
+## Extra variables
 
 The IMDB rate and number of votes could be useful for prediction, so added them to the trainset from
 IMDB website by the movies’ IMDB id by web scraping. First find the page of each movies on IMDB, then
 find the content of the movies IMDB page and then find the class that is related to the rate and number of
 votes. Then put them into the dataset.
 
-Nan values
+## Nan values
 The nan values of the dataset are shown below. Some variables (Genre, Overview, Keywords, Production
 companies) which are possible, are replaced by the correct values from IMDB website by web scraping.
 poster path and homepage are not important so we can remove them. 29 96 numbers of the movies are
@@ -121,7 +121,7 @@ dictionary or a function that convert list to string or vice versa.
 
 Budget has zero in some rows that are fixed by lighting GBM model that predict the zero values.
 
-Data extraction
+## Data extraction
 
 Some movies have more than one genre. Maybe the number of
 genres could be useful for the prediction of revenue. The same
@@ -157,7 +157,7 @@ Top keywords, top genres and top companies are created as same as top cast too.
 Dummies technic could be used for genres variable, because of categorical variable which is used on this
 dataset.
 
-Feature engineering
+## Feature engineering
 
 weighted rate (The Bayesian Average): Bayesian Average computes the mean of a population by not only
 using the data residing in the population but also considering some outside information.
@@ -169,7 +169,7 @@ the minimum vote across the whole report (currently 25000).
 
 Some additional features are calculated like ratio of budget on year or budget on popularity and so on.
 
-Normalization
+## Normalization
 
 After checking the budget and popularity distribution and their logarithm distribution, I decided to use
 their logarithm in the models. The distribution plots are shown below.
@@ -185,7 +185,7 @@ Train and test split
 The logarithm of revenue is selected as dependence variable and the other numeric ones as independence
 variable. For creating the models, 0.1 of our train set are chosen as test and 0.9 of it as train.
 
-Models
+## Models
 
 Seven models are trained on this project. Linear regression, Lasso, Ridge, Elastic Net, Random forest,
 Lighting GBM and Cat boost.
@@ -220,8 +220,35 @@ all proccesing on randomized search {'subsample': 27, 'num_leaves': 10, 'max_dep
 Cat boost: The last model that is used is Cat boost. The parameters of this model are chosen {'learning_rate':
 0.03, 'l2_leaf_reg': 9, 'depth': 6}. And the accuracy unfortunately decreased 0.1 percent.
 
-Evaluation
+## Evaluation
 
 The evaluation parameters on this project are root mean squared error, mean absolute error, accuracy and
 cross validation on mean absolute error. The accuracy is calculated by 100 multiples on the mean absolute
 percentage error minus 100. You can see the difference value between base models and the tuned one.
+
+The best model Considering the RMSE is Cat Tuned one with 1.65881283422061 RMSE
+
+The best model Considering the MAE is LGBM Tuned one with 1.1198599722006688 MAE
+
+The best model Considering the CV is Cat Base one with 1.1965434932087693 CV
+
+The best model Considering the Accuracy is LGBM Tuned one with 90.64770979755164 Accuracy
+
+combination of the best of the models means Cat boost, Lighting GBM and Random forest with 10% of Cat
+boost, 60% of Lighting GBM and 30% of random forest, give the better model with accuracy 90.68%, RMSE
+1.654 and MAE 1.110.
+
+## Web App
+
+For making the project more effective, I tried the Streamlit that you can find the details of codes in another
+file which is called Stream.
+
+The dashboard contains two part. First part that is the main is about estimating the revenue of movies by
+your data. For example, you want to know the revenue of a movie which is made in April of 2019 in Action
+and Comedy genres with 2 million dollars as budget and so on, you can use this dashboard. In the main
+page you must select your values and after that click on Predict bottom and see the revenue which is
+estimated. For this prediction, you can choose your model too. The models are exported from the main
+python file of this project.
+
+The second part of the dashboard is in sidebar. Some information about the evaluation of the model that
+you chose, will be shown in the sidebar.
